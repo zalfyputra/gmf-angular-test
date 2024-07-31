@@ -1,0 +1,49 @@
+@keyframes scroll-right {
+    0% {
+      transform: translateX(100%);
+    }
+    100% {
+      transform: translateX(-100%);
+    }
+  }
+  
+  .scroll-container {
+    width: 100%;
+    overflow: hidden; /* Hide overflow to ensure scrolling is smooth */
+    white-space: nowrap; /* Prevent line breaks inside the container */
+    position: relative; /* Positioning for the absolute child */
+  }
+  
+  .scroll-content {
+    display: flex;
+    animation: scroll-right 20s linear infinite; /* Adjust duration as needed */
+    white-space: nowrap; /* Prevent line breaks */
+  }
+  
+  .item {
+    flex: 0 0 auto; /* Prevent items from shrinking or growing */
+    width: 560px; /* Adjust as needed to fit your content */
+    height: 315px; /* Adjust as needed to fit your content */
+    margin-right: 0; /* No margin to ensure no gaps */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  iframe {
+    width: 100%;
+    height: 100%;
+  }
+  
+  .tradingview-widget-container {
+    width: 560px; /* Match the width of other items */
+    height: 315px; /* Match the height of other items */
+  }
+  .carousel-item {
+    opacity: 0;
+    transition: opacity 1s ease-in-out;
+  }
+  
+  .carousel-item.active {
+    opacity: 1;
+  }

@@ -1,0 +1,88 @@
+<app-navbar></app-navbar>
+<div class="min-h-screen mt-20 md:mt-10 flex items-center justify-center">
+    <div class="mx-auto w-11/12 my-8 bg-white shadow-md rounded-lg overflow-hidden">
+        <div class="p-6">
+            <h2 class="text-2xl font-semibold text-gray-900 text-center justify-center mb-3 uppercase py-3">Search Internal Occurrence Report</h2>
+            <form class="w-full mx-auto">   
+                <label for="default-search" class="mb-2 text-sm font-medium text-gray-900 sr-only ">Search</label>
+                <div class="relative">
+                    <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
+                        <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
+                        </svg>
+                    </div>
+                    <input type="search" id="default-search" class="block w-full p-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 focus:outline-none" placeholder="Search by TO UIC or NCR INIT ID" required />
+                    <button type="submit" class="text-white absolute end-2.5 bottom-2.5 bg-[#016299] hover:bg-[#015581] focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2">Search</button>
+                </div>
+            </form>
+            <div class="show-table mt-5 border border-gray-500">
+                <div class="table-responsive overflow-auto">
+                  <table class="table w-full bg-white overflow-y-scroll" id="data-table">
+                    <thead class="bg-blue-100 font-medium">
+                      <tr class="border-b border-gray-500">
+                        <th id="subject_ior" class="px-4 py-2 border-r border-gray-500">Subject&nbsp;IOR</th>
+                        <th id="occur_nbr" class="px-4 py-2 border-r border-gray-500">IOR&nbsp;Number</th>
+                        <th id="occur_date" class="px-4 py-2 border-r border-gray-500">IOR&nbsp;Date</th>
+                        <th id="reference_ior" class="px-4 py-2 border-r border-gray-500">Reference&nbsp;IOR</th>
+                        <th id="to_uic" class="px-4 py-2 border-r border-gray-500">To&nbsp;UIC</th>
+                        <th id="cc_uic" class="px-4 py-2 border-r border-gray-500">CC&nbsp;UIC</th>
+                        <th id="category_ior" class="px-4 py-2 border-r border-gray-500">Category&nbsp;IOR</th>
+                        <th id="type_or_phone_number" class="px-4 py-2 border-r border-gray-500">Type&nbsp;OR&nbsp;Phone&nbsp;Number</th>
+                        <th id="level_type" class="px-4 py-2 border-r border-gray-500">Level&nbsp;Type</th>
+                        <th id="detail_occurrence" class="px-4 py-2 border-r border-gray-500">Detail&nbsp;Occurance</th>
+                        <th id="reported_by" class="px-4 py-2 border-r border-gray-500">Reported&nbsp;By</th>
+                        <th id="reporter_uic" class="px-4 py-2 border-r border-gray-500">Reporter&nbsp;UIC</th>
+                        <th id="report_date" class="px-4 py-2 border-r border-gray-500">Report&nbsp;Date</th>
+                        <th id="report_identify" class="px-4 py-2 border-r border-gray-500">Report Identify</th>
+                        <th id="data_reference" class="px-4 py-2 border-r border-gray-500">Data Reference</th>
+                        <th id="hirac_process" class="px-4 py-2 border-r border-gray-500">Hirac Process</th>
+                        <th id="initial_probability" class="px-4 py-2 border-r border-gray-500">Initial Probability</th>
+                        <th id="initial_severity" class="px-4 py-2 border-r border-gray-500">Initial Severity</th>
+                        <th id="initial_riskindex" class="px-4 py-2 border-r border-gray-500">Initial Riskindex</th>
+                        <th id="current_probability" class="px-4 py-2 border-r border-gray-500">Current Probability</th>
+                        <th id="current_severity" class="px-4 py-2 border-r border-gray-500">Current Severity</th>
+                        <th id="current_riskindex" class="px-4 py-2 border-r border-gray-500">Current Riskindex</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let item of items" class="border-b border-gray-500">
+                        <td class="px-4 py-2 border-r border-gray-500">{{ item.subject_ior }}</td>
+                        <td class="px-4 py-2 border-r border-gray-500">{{ item.occur_nbr }}</td>
+                        <td class="px-4 py-2 border-r border-gray-500">{{ item.occur_date}}</td>
+                        <td class="px-4 py-2 border-r border-gray-500">{{ item.reference_ior }}</td>
+                        <td class="px-4 py-2 border-r border-gray-500">{{ item.to_uic }}</td>
+                        <td class="px-4 py-2 border-r border-gray-500">{{ item.cc_uic }}</td>
+                        <td class="px-4 py-2 border-r border-gray-500">{{ item.category_ior }}</td>
+                        <td class="px-4 py-2 border-r border-gray-500">{{ item.type_or_phone_number }}</td>
+                        <td class="px-4 py-2 border-r border-gray-500">{{ item.level_type }}</td>
+                        <td class="px-4 py-2 border-r border-gray-500">{{ item.detail_occurrence }}</td>
+                        <td class="px-4 py-2 border-r border-gray-500">{{ item.reported_by }}</td>
+                        <td class="px-4 py-2 border-r border-gray-500">{{ item.reporter_uic }}</td>
+                        <td class="px-4 py-2 border-r border-gray-500">{{ item.report_date }}</td>
+                        <td class="px-4 py-2 border-r border-gray-500">{{ item.report_identify }}</td>
+                        <td class="px-4 py-2 border-r border-gray-500">{{ item.data_reference }}</td>
+                        <td class="px-4 py-2 border-r border-gray-500">{{ item.hirac_process }}</td>
+                        <td class="px-4 py-2 border-r border-gray-500">{{ item.initial_probability }}</td>
+                        <td class="px-4 py-2 border-r border-gray-500">{{ item.initial_severity }}</td>
+                        <td class="px-4 py-2 border-r border-gray-500">{{ item.initial_riskindex}}</td>
+                        <td class="px-4 py-2 border-r border-gray-500">{{ item.current_probability }}</td>
+                        <td class="px-4 py-2 border-r border-gray-500">{{ item.current_severity }}</td>
+                        <td class="px-4 py-2 border-r border-gray-500">{{ item.current_riskindex}}</td>
+                        <td class="px-4 py-2">
+                          <button class="text-blue-500 hover:underline">Preview</button><br>
+                          <button class="text-blue-500 hover:underline">Edit</button>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div> 
+             </div>   
+             <div class="flex justify-center mt-5">
+              <button class="text-white justify-center bg-[#107c41] hover:bg-[#185c37] focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg px-4 py-2" (click)="exportToExcel()">
+                <i class="fas fa-file-excel text-white mr-2"></i>Export to Excel
+              </button>
+              </div>                       
+        </div>
+    </div>
+</div>
+<app-footer></app-footer>
