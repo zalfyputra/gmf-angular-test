@@ -24,7 +24,7 @@ export class FollowonIORComponent {
 
   async getAccountInfo() {
     try {
-      const response = await axios.post('https://gmf-doa-2qimicuoja-et.a.run.app/showAccount', { accountid: this.accountid });
+      const response = await axios.post('http://localhost:3000/showAccount', { accountid: this.accountid });
       if (response.data.status === 200 && response.data.account) {
         this.account = response.data.account;
       } else {

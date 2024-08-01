@@ -20,21 +20,21 @@ export class FormNCRComponent implements OnInit {
     accountid: '',
     regulationbased: '',
     subject: '',
-    audit_no: '',
+    audit_plan_no: '',
     ncr_no: '',
     issued_date: '',
-    responsible_office: '',
+    responsibility_office: '',
     audit_type: '',
     audit_scope: '',
     to_uic: '',
     attention: '',
-    require_condition: '',
+    require_condition_reference: '',
     level_finding: '',
-    problem_analis: '',
-    answer_duedate: '',
+    problem_analysis: '',
+    answer_due_date: '',
     issue_ian: '',
     ian_no: '',
-    encounter_conditon: '',
+    encountered_conditon: '',
     audit_by: '',
     audit_date: '',
     acknowledge_by: '',
@@ -58,7 +58,7 @@ export class FormNCRComponent implements OnInit {
 
   async getAccountInfo() {
     try {
-      const response = await axios.post('https://gmf-doa-2qimicuoja-et.a.run.app/showAccount', { accountid: this.currentAccountID });
+      const response = await axios.post('http://localhost:3000/showAccount', { accountid: this.currentAccountID });
       if (response.data.status === 200 && response.data.account) {
         this.account = response.data.account;
       } else {
@@ -68,13 +68,19 @@ export class FormNCRComponent implements OnInit {
       console.error('There was an error fetching account info!', error);
     }
   }
-
   async submitNCR() {
     this.ncr_data.accountid = this.currentAccountID;
     console.log("Sending data:", this.ncr_data);
+  
+    // Show the generating toast
+    const generatingToastElement = this.toastService.generatingToast('Generating NCR Form');
+  
     try {
-      const response = await axios.post('https://gmf-doa-2qimicuoja-et.a.run.app/addNCRInit', this.ncr_data);
-
+      const response = await axios.post('http://localhost:3000/addNCRInit', this.ncr_data);
+  
+      // Remove the generating toast
+      document.body.removeChild(generatingToastElement);
+  
       if (response.data.status === 200) {
         this.toastService.successToast('NCR form added successfully');
         console.log('NCR form added successfully');
@@ -83,6 +89,8 @@ export class FormNCRComponent implements OnInit {
         console.error('Failed to submit NCR form:', response.data.message);
       }
     } catch (error) {
+      // Remove the generating toast in case of error
+      document.body.removeChild(generatingToastElement);
       this.toastService.failedToast('There was an error adding NCR form');
       console.error('There was an error adding NCR form', error);
     }

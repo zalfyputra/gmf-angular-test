@@ -44,7 +44,7 @@
                 <label class="block tracking-wide text-gray-700 text-xs font-semibold mb-2">
                 Audit No
                 </label>
-                <input [(ngModel)]="ncr_data.audit_no" name="audit_no" class="block w-full bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:outline-none focus:ring-blue-500 focus:border-blue-500 py-3 px-4 leading-tight" type="text" placeholder="AP-01-2022" required>
+                <input [(ngModel)]="ncr_data.audit_plan_no" name="audit_plan_no" class="block w-full bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:outline-none focus:ring-blue-500 focus:border-blue-500 py-3 px-4 leading-tight" type="text" placeholder="AP-01-2022" required>
             </div>
             <!-- Issued Date -->
             <div class="w-full md:w-1/5 px-3 mb-6 md:mb-0">
@@ -63,7 +63,7 @@
                 Responsible Office
                 </label>
                 <div class="relative">
-                <select [(ngModel)]="ncr_data.responsible_office" name="responsible_office" class="block appearance-none w-full bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:outline-none focus:ring-blue-500 focus:border-blue-500 py-3 px-4 pr-8 leading-tight" placeholder="Select" required>
+                <select [(ngModel)]="ncr_data.responsibility_office" name="responsibility_office" class="block appearance-none w-full bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:outline-none focus:ring-blue-500 focus:border-blue-500 py-3 px-4 pr-8 leading-tight" placeholder="Select" required>
                     <option value="" disabled selected>Select your data</option>
                     <option [value]="'AO: Airworthiness Office'">AO: Airworthiness Office</option>
                     <option [value]="'DO: Design Office'">DO: Design Office</option>
@@ -156,7 +156,7 @@
               <label class="block tracking-wide text-gray-700 text-xs font-semibold mb-2" for="grid-password">
                 Require Condition
               </label>
-              <textarea [(ngModel)]="ncr_data.require_condition" name="require_condition" class="appearance-none h-auto block w-full bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:outline-none focus:ring-blue-500 focus:border-blue-500 py-3 px-4 leading-tight text-sm" placeholder="Enter your data" required></textarea>
+              <textarea [(ngModel)]="ncr_data.require_condition_reference" name="required_condition_reference" class="appearance-none h-auto block w-full bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:outline-none focus:ring-blue-500 focus:border-blue-500 py-3 px-4 leading-tight text-sm" placeholder="Enter your data" required></textarea>
             </div>
         </div>
 
@@ -185,7 +185,7 @@
                 Problem Analysis
                 </label>
                 <div class="relative">
-                <select [(ngModel)]="ncr_data.problem_analis" name="problem_analis" class="block appearance-none w-full bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:outline-none focus:ring-blue-500 focus:border-blue-500 py-3 px-4 pr-8 leading-tight" required>
+                <select [(ngModel)]="ncr_data.problem_analysis" name="problem_analysis" class="block appearance-none w-full bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:outline-none focus:ring-blue-500 focus:border-blue-500 py-3 px-4 pr-8 leading-tight" required>
                     <option value="" disabled selected>Select your data</option>
                     <option [value]="'Required'">Required</option>
                     <option [value]="'Not required'">Not required</option>
@@ -200,7 +200,7 @@
                 <label class="block tracking-wide text-gray-700 text-xs font-semibold mb-2">
                 Answer Due Date
                 </label>
-                <input [(ngModel)]="ncr_data.answer_duedate" name="answer_duedate" class="block w-full bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:outline-none focus:ring-blue-500 focus:border-blue-500 py-3 px-4 leading-tight" type="date" required>
+                <input [(ngModel)]="ncr_data.answer_due_date" name="answer_due_date" class="block w-full bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:outline-none focus:ring-blue-500 focus:border-blue-500 py-3 px-4 leading-tight" type="date" required>
             </div>
             <!-- Issue IAN -->
             <div class="w-full md:w-1/5 px-3 mb-6 md:mb-0">
@@ -210,8 +210,8 @@
                 <div class="relative">
                     <select [(ngModel)]="ncr_data.issue_ian" name="issue_ian" class="block appearance-none w-full bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:outline-none focus:ring-blue-500 focus:border-blue-500 py-3 px-4 pr-8 leading-tight" required>
                         <option value="" disabled selected>Select your data</option>
-                        <option [value]="'true'">Yes</option>
-                        <option [value]="'false'">No</option>
+                        <option [value]="true">Yes</option>
+                        <option [value]="false">No</option>
                     </select>
                         <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
                             <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
@@ -283,7 +283,7 @@
               <label class="block tracking-wide text-gray-700 text-xs font-semibold mb-2" for="grid-password">
                 Encounter Condition
               </label>
-              <textarea [(ngModel)]="ncr_data.encounter_conditon" name="encounter_condition" class="appearance-none block w-full bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:outline-none focus:ring-blue-500 focus:border-blue-500 py-3 px-4 leading-tight text-sm" placeholder="Enter your data" required></textarea>
+              <textarea [(ngModel)]="ncr_data.encountered_conditon" name="encounter_condition" class="appearance-none block w-full bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:outline-none focus:ring-blue-500 focus:border-blue-500 py-3 px-4 leading-tight text-sm" placeholder="Enter your data" required></textarea>
             </div>
             <!-- Temporary Link -->
             <div class="w-full md:w-1/2 px-3">

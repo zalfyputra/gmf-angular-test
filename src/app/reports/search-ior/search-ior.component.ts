@@ -2,21 +2,37 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NavbarComponent } from "../../navbar/navbar.component";
 import { FooterComponent } from "../../footer/footer.component";
-import { FormsModule } from '@angular/forms';
 import axios from 'axios';
-import _ from 'lodash';
 import * as XLSX from 'xlsx';
+import { FormsModule } from '@angular/forms'; // Ensure FormsModule is imported
 
 @Component({
   selector: 'app-search-ior',
   standalone: true,
   imports: [CommonModule, NavbarComponent, FooterComponent, FormsModule],
   templateUrl: './search-ior.component.html',
-  styleUrl: './search-ior.component.css'
+  styleUrls: ['./search-ior.component.css']
 })
 export class SearchIORComponent implements OnInit {
   items: any[] = [];
   searchData = { input: '' };
+  searchTerm: string = '';
+  filterBy: string = 'all';
+  showFilters: boolean = false;
+
+  setFilter(filter: string) {
+    this.filterBy = filter;
+  }
+
+  toggleFilter() {
+    this.showFilters = !this.showFilters;
+  }
+
+  search() {
+    console.log('Filter by:', this.filterBy);
+    console.log('Search term:', this.searchTerm);
+    this.fetchDataBySearchTerm();
+  }
 
   ngOnInit() {
     this.fetchDataFromServer();
@@ -24,31 +40,29 @@ export class SearchIORComponent implements OnInit {
 
   async fetchDataFromServer() {
     try {
-      if (!this.searchData.input) {
-          const response = await axios.get("https://gmf-doa-2qimicuoja-et.a.run.app/showIORInit");
-          if (response.data.status === 200) {
-              this.items = response.data.showProduct;
-          } else {
-              console.error('Error Message:', response.data.message);
-          }
+      const response = await axios.get('http://localhost:3000/showOccurrenceAll');
+      if (response.data.status === 200) {
+        this.items = response.data.showProduct;
+      } else {
+        console.error('Error Message:', response.data.message);
       }
     } catch (error) {
-        console.error('Error:', error);
+      console.error('Error:', error);
     }
   }
 
   async fetchDataBySearchTerm() {
     try {
-      const response = await axios.post("https://gmf-doa-2qimicuoja-et.a.run.app/searchIOR", this.searchData);
+      const response = await axios.post('http://localhost:3000/searchIOR', this.searchData);
       if (response.data.status === 200) {
-          this.items = response.data.showProduct;
+        this.items = response.data.showProduct;
       } else {
-          console.error('Error Message:', response.data.message);
-          this.items = [];
+        console.error('Error Message:', response.data.message);
+        this.items = [];
       }
     } catch (error) {
-        console.error('Error:', error);
-        this.items = [];
+      console.error('Error:', error);
+      this.items = [];
     }
   }
 
@@ -64,18 +78,25 @@ export class SearchIORComponent implements OnInit {
   
     XLSX.writeFile(wb, fileName);
   }
-  
-  navigatePreview(iorNo: string): void {
-    sessionStorage.setItem('ior_init_id', iorNo);
-    window.location.href = '/preview';
+
+  async navigatePreview(documentId: string) {
+    try {
+      sessionStorage.setItem('document_id', documentId);
+      console.log(documentId);
+      const response = await axios.post('http://localhost:3000/getPDFDrive', {documentId});
+      console.log(response.data.message);
+      if (response.data.status === 200) {
+        window.location.href = response.data.message;
+      } else {
+        console.error('Error Message:', response.data.message);
+      }
+    } catch (error) {
+      console.error('Error:', error);
+    }
   }
 
-  navigateEdit(iorNo: string): void {
-    sessionStorage.setItem('ior_init_id', iorNo);
-    window.location.href = '/editIOR';
-  }
-
-  search() {
-    this.fetchDataBySearchTerm();
+  navigateEdit(documentId: string) {
+    sessionStorage.setItem('document_id', documentId);
+    window.location.href = 'Edit_IOR_2.html';
   }
 }

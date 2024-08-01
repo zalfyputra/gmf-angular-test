@@ -47,14 +47,14 @@ export class RegisterComponent implements OnInit {
   async registerAccount() {
     console.log("Sending data:", this.registerData);
     try {
-      const response = await axios.post("https://gmf-doa-2qimicuoja-et.a.run.app/addAccount", this.registerData);
+      const response = await axios.post("http://localhost:3000/addAccount", this.registerData);
       console.log("Server response:", response.data);
       if (response.data.status === 200) {
         this.registerMessage = response.data.message;
         this.toastService.successToast('Registration successful');
       } else {
         this.registerMessage = response.data.message;
-        this.toastService.failedToast('Email address not valid');
+        this.toastService.failedToast('Email/password not valid, please use company domain and strong password');
       }
     } catch (error: unknown) {
       if (axios.isAxiosError(error)) {

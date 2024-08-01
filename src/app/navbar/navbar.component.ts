@@ -9,7 +9,7 @@ import { ToastService } from '../toast.service';
   standalone: true,
   imports: [CommonModule],
   templateUrl: './navbar.component.html',
-  styleUrl: './navbar.component.css'
+  styleUrls: ['./navbar.component.css']
 })
 export class NavbarComponent implements OnInit {
   constructor(private router: Router, private toastService: ToastService) { }
@@ -25,7 +25,7 @@ export class NavbarComponent implements OnInit {
   }
 
   logout() {
-    axios.post(`https://gmf-doa-2qimicuoja-et.a.run.app/logout`)
+    axios.post(`http://localhost:3000/logout`)
       .then(response => {
         sessionStorage.removeItem('accountid');
         this.router.navigate(['/login']);

@@ -3,10 +3,8 @@ import { CommonModule } from '@angular/common';
 import { NavbarComponent } from "../../navbar/navbar.component";
 import { FooterComponent } from "../../footer/footer.component";
 import axios from 'axios';
-import _ from 'lodash';
 import * as XLSX from 'xlsx';
 import { FormsModule } from '@angular/forms'; // Ensure FormsModule is imported
-import { response } from 'express';
 
 @Component({
   selector: 'app-search-ncr',
@@ -18,14 +16,17 @@ import { response } from 'express';
 export class SearchNCRComponent implements OnInit {
   items: any[] = [];
   searchData = { input: '' };
-
+  searchTerm: string = ''; // Define searchTerm here
+  filterBy: string = 'all'; // Default filter
+  showFilters: boolean = false; // Toggle for filter visibility
+  
   ngOnInit() {
     this.fetchDataFromServer();
   }
 
   async fetchDataFromServer() {
     try {
-      const response = await axios.get('https://gmf-doa-2qimicuoja-et.a.run.app/showNCRInit');
+      const response = await axios.get('http://localhost:3000/showNCRInit');
       if (response.data.status === 200) {
         this.items = response.data.showProduct;
       } else {
@@ -38,7 +39,10 @@ export class SearchNCRComponent implements OnInit {
 
   async fetchDataBySearchTerm() {
     try {
-      const response = await axios.post('https://gmf-doa-2qimicuoja-et.a.run.app/searchNCR', this.searchData);
+      const response = await axios.post('http://localhost:3000/searchNCR', {
+        ...this.searchData,
+        filterBy: this.filterBy // Include filter criteria in the request
+      });
       if (response.data.status === 200) {
         this.items = response.data.showProduct;
       } else {
@@ -64,17 +68,38 @@ export class SearchNCRComponent implements OnInit {
     XLSX.writeFile(wb, fileName);
   }
 
-  navigatePreview(ncrNo: string) {
-    sessionStorage.setItem('ncr_init_id', ncrNo);
-    window.location.href = '/preview';
+  async navigatePreview(documentId: string) {
+    try {
+      sessionStorage.setItem('document_id', documentId);
+      console.log(documentId);
+      const response = await axios.post('http://localhost:3000/getPDFDrive', { documentId });
+      console.log(response.data.message);
+      if (response.data.status === 200) {
+        window.location.href = response.data.message;
+      } else {
+        console.error('Error Message:', response.data.message);
+      }
+    } catch (error) {
+      console.error('Error:', error);
+    }
   }
 
-  navigateEdit(ncrNo: string) {
-    sessionStorage.setItem('ncr_init_id', ncrNo);
+  navigateEdit(ncr_init_id: string) {
+    sessionStorage.setItem('ncr_init_id', ncr_init_id);
     window.location.href = '/editNCR';
   }
 
   search() {
     this.fetchDataBySearchTerm();
+  }
+
+  toggleFilter() {
+    this.showFilters = !this.showFilters;
+  }
+
+  // Add this method to handle view details functionality
+  viewDetails(documentId: string) {
+    sessionStorage.setItem('document_id', documentId);
+    window.location.href = 'details-NCR.html'; // Change this to the actual path where details are displayed
   }
 }

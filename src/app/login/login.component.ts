@@ -21,7 +21,7 @@ export class LoginComponent {
 
   async login() {
     try {
-      const response = await axios.post('https://gmf-doa-2qimicuoja-et.a.run.app/login', {
+      const response = await axios.post('http://localhost:3000/login', {
         email: this.email,
         Password: this.password
       });

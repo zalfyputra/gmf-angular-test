@@ -48,4 +48,26 @@ export class ToastService {
       document.body.removeChild(toastContainer);
     }, 2000);
   }
+
+  generatingToast(message: string) {
+    const toastContainer = document.createElement('div');
+    toastContainer.innerHTML = `
+      <div class="z-50 fixed top-28 left-1/2 transform -translate-x-1/2 flex flex-col items-center" id="generating-toast">
+        <div class="flex items-center w-full max-w-xs p-4 mb-4 text-gray-500 bg-white rounded-lg shadow-lg border" role="alert">
+            <div class="inline-flex items-center justify-center flex-shrink-0 w-8 h-8 text-gray-500 bg-gray-100 rounded-lg dark:bg-gray-800 dark:text-gray-200">
+                <svg class="animate-spin w-5 h-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z"></path>
+                </svg>
+                <span class="sr-only">Loading icon</span>
+            </div>
+            <div class="ms-3 text-sm font-medium">${message}</div>
+        </div>
+      </div>
+    `;
+    document.body.appendChild(toastContainer);
+    return toastContainer;
+  }
+  
+  
 }

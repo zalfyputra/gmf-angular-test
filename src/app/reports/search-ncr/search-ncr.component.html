@@ -3,20 +3,138 @@
     <div class="mx-auto w-11/12 bg-white shadow-md rounded-lg overflow-hidden">
         <div class="p-6">
             <h2 class="text-2xl font-bold text-gray-900 text-center justify-center mb-3 uppercase py-3">Search NON-CONFORMANCE REPORT </h2>
-            <form class="w-full mx-auto" (ngSubmit)="search()">   
-                <label for="default-search" class="mb-2 text-sm font-medium text-gray-900 sr-only ">Search</label>
-                <div class="relative">
-                    <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
-                        <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
-                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
-                        </svg>
-                    </div>
-                    <input type="search" id="default-search" [(ngModel)]="searchData.input" name="searchInput" class="block w-full p-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 focus:outline-none" placeholder="Search by TO UIC or NCR INIT ID" required />
-                    <button type="submit" class="text-white absolute end-2.5 bottom-2.5 bg-[#016299] hover:bg-[#015581] focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2">Search</button>
-                </div>
+            <form class="w-full mx-auto" (ngSubmit)="search()">  
             </form>
+              <div class="relative flex items-center">
+                <!-- Button with filter icon -->
+                <button type="button" (click)="toggleFilter()" class="p-2 bg-gray-200 hover:bg-gray-300 rounded-full focus:outline-none">
+                  <svg class="w-6 h-6 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2a1 1 0 01-1 1H4a1 1 0 01-1-1V4zm1 6h14v2H4v-2zm1 6h12v2H5v-2zm-1 6h14v2H4v-2z"/>
+                  </svg>
+                </button>
+                <div class="relative w-full">
+                  <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                    <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                      <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
+                    </svg>
+                  </div>
+                  <input type="search" id="default-search" [(ngModel)]="searchTerm" name="search" class="block w-full p-4 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 focus:outline-none" placeholder="Search by TO UIC or IOR INIT ID" required />
+                  <button type="submit" class="text-white absolute right-2.5 bottom-2.5 bg-[#016299] hover:bg-[#015581] focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2">Search</button>
+                </div>
+              </div>
+              <div *ngIf="showFilters" class="mt-4">
+                <label for="filter" class="block text-sm font-medium text-gray-700">Filter By</label>
+                <div class="p-4">
+                  <!-- <h2 class="text-lg font-semibold">Filter</h2> -->
+                  <div class="mt-4">
+
+                    <!-- Regulations Based -->
+                    <div class="mb-4">
+                      <label for="regulation-based" class="text-md font-semibold">Regulations Based</label>
+                      <select id="type-ior" class="block w-full mt-2 p-2 border border-gray-300 rounded-md">
+                        <option value="" disabled selected>Select your data</option>
+                        <option value="dgca">DGCA</option>
+                        <option value="easa">EASA</option>
+                      </select>
+                    </div>
+                
+                    <!-- responsible office Dropdown -->
+                    <div class="mb-4">
+                      <label for="responsibile-office" class="text-md font-semibold">Responsibile Office</label>
+                      <select id="responsibile-office" class="block w-full mt-2 p-2 border border-gray-300 rounded-md">
+                        <option value="" disabled selected>Select your data</option>
+                        < <option value="'AO: Airworthiness Office'">AO: Airworthiness Office</option>
+                        <option value="'DO: Design Office'">DO: Design Office</option>
+                        <option value="'IM: Independent Monitoring'">IM: Independent Monitoring</option>
+                        <option value="'PR: Partner'">PR: Partner</option>
+                        <option value="'SC: Subcontractor'">SC: Subcontractor</option>
+                        <option value="'BR: BRIN'">BR: BRIN</option>
+                        <option value="'GF: GMF AeroAsia'">GF: GMF AeroAsia</option>
+                        <option value="'BA: BIFA Flying School'">BA: BIFA Flying School</option>
+                        <option value="'EL: Elang Lintas Indonesia'">EL: Elang Lintas Indonesia</option>
+                    
+                      </select>
+                    </div>
+                
+                    <!--Audit type Dropdown -->
+                    <div class="mb-4">
+                      <label for="audit-type" class="text-md font-semibold">AuditType</label>
+                      <select id="audit-type" class="block w-full mt-2 p-2 border border-gray-300 rounded-md">
+                        <option value="" disabled selected>Select your data</option>
+                        <option [value]="'Procedure'">Procedure</option>
+                        <option [value]="'Product'">Product</option>
+                        <option [value]="'Surveillance'">Surveillance</option>
+                      </select>
+                    </div>
+                
+                    <!-- audit scope Dropdown -->
+                    <div class="mb-4">
+                      <label for="data-reference" class="text-md font-semibold">Audit Scope</label>
+                      <select id="data-reference" class="block w-full mt-2 p-2 border border-gray-300 rounded-md">
+                        <option value="" disabled selected>Select your data</option>
+                        <option [value]="'Authority'">Authority</option>
+                        <option [value]="'Internal'">Internal</option>
+                        <option [value]="'External'">External</option>
+                        <option [value]="'Subcontractor'">Subcontractor</option>
+                      </select>
+                    </div>
+                
+                    <!-- to uic Dropdown -->
+                    <div class="mb-4">
+                      <label for="to-uic" class="text-md font-semibold">To UIC</label>
+                      <select id="to-uic" class="block w-full mt-2 p-2 border border-gray-300 rounded-md">
+                        <option value="" disabled selected>Select your data</option>
+                        <option [value]="'Chief Design Office'">Chief Design Office</option>
+                        <option [value]="'Chief Airworthiness Office'">Chief Airworthiness Office</option>
+                        <option [value]="'Chief Independent Monitoring'">Chief Independent Monitoring</option>
+                        <option [value]="'Head of DOA'">Head of DOA</option>
+                      </select>
+                    </div>
+                    <!-- level of finding Dropdown -->
+                    <div class="mb-4">
+                      <label for="level-finding" class="text-md font-semibold">Level Finding</label>
+                      <select id="level-finding" class="block w-full mt-2 p-2 border border-gray-300 rounded-md">
+                        <option value="" disabled selected>Select your data</option>
+                        <option [value]="'1'">1</option>
+                        <option [value]="'2'">2</option>
+                        <option [value]="'3'">3</option>
+                      </select>
+                    </div>
+                     <!-- problem analysis Dropdown -->
+                     <div class="mb-4">
+                      <label for="problem-analysis" class="text-md font-semibold">Problem Analysis</label>
+                      <select id="problem-analysis" class="block w-full mt-2 p-2 border border-gray-300 rounded-md">
+                        <option value="" disabled selected>Select your data</option>
+                        <option [value]="'Required'">Required</option>
+                        <option [value]="'Not required'">Not required</option>
+                   </select>
+                    </div>
+                    <!-- Issue IAN Dropdown -->
+                    <div class="mb-4">
+                      <label for="issue-ian" class="text-md font-semibold">Issue IAN</label>
+                      <select id="issue-ian" class="block w-full mt-2 p-2 border border-gray-300 rounded-md">
+                        <option value="" disabled selected>Select your data</option>
+                        <option [value]="'yes'">Yes</option>
+                        <option [value]="'no'">No</option>
+                   </select>
+                    </div>
+                    <!-- Status Dropdown -->
+                    <div class="mb-4">
+                      <label for="status" class="text-md font-semibold">Status</label>
+                      <select id="status" class="block w-full mt-2 p-2 border border-gray-300 rounded-md">
+                        <option value="" disabled selected>Select your data</option>
+                        <option [value]="'Open'">Open</option>
+                        <option [value]="'Closed'">Closed</option>
+                        <option [value]="'Monitor'">Monitor</option>
+                    </select>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            
+          
             <div class="show-table mt-5 border border-gray-500">
-                <div class="table-responsive overflow-auto h-96">
+                <div class="table-responsive overflow-auto "style="max-height: 600px; min-height: 200px;">
                   <table class="table w-full bg-white overflow-y-scroll text-sm" id="data-table">
                     <thead class="bg-blue-100 font-medium">
                       <tr class="border-b border-gray-500">
@@ -41,7 +159,7 @@
                         <th id="acknowledge_by" class="px-4 py-2 border-r border-gray-500">Acknowledge&nbsp;By</th>
                         <th id="acknowledge_date" class="px-4 py-2 border-r border-gray-500">Acknowledge&nbsp;Date</th>
                         <th id="status" class="px-4 py-2 border-r border-gray-500">Status</th>
-                        <th id="temporary_link" class="px-4 py-2 border-r border-gray-500">Temporary Link</th>
+                        <th id="document_id" class="px-4 py-2 border-r border-gray-500">Document ID</th>
                         <th id="action" class="px-4 py-2">Action</th>
                       </tr>
                     </thead>
@@ -68,9 +186,9 @@
                         <td class="px-4 py-2 border-r border-gray-500">{{ item.acknowledge_by }}</td>
                         <td class="px-4 py-2 border-r border-gray-500">{{ item.acknowledge_date }}</td>
                         <td class="px-4 py-2 border-r border-gray-500">{{ item.status }}</td>
-                        <td class="px-4 py-2 border-r border-gray-500"><a target="_blank" href="{{ item.temporarylink }}" class="underline text-[#016299]"> {{ item.temporarylink }}</a></td>
+                        <td class="px-4 py-2 border-r border-gray-500">{{ item.documentid }}</td>
                         <td class="px-4 py-2">
-                          <button (click)="navigatePreview(item.ncr_init_id)" class="inline-block bg-[#016299] rounded border-2 border-primary px-3 pb-[6px] pt-2 text-xs font-medium uppercase leading-normal text-primary transition duration-150 ease-in-out hover:border-primary-accent-300 hover:bg-primary-50/50 hover:text-primary-accent-300 focus:border-primary-600 focus:bg-primary-50/50 focus:text-primary-600 focus:outline-none focus:ring-0 active:border-primary-700 active:text-primary-700 motion-reduce:transition-none dark:text-primary-500 dark:hover:bg-blue-950 dark:focus:bg-blue-950 text-white">Preview</button>
+                          <button (click)="navigatePreview(item.documentid)" class="inline-block bg-[#016299] rounded border-2 border-primary px-3 pb-[6px] pt-2 text-xs font-medium uppercase leading-normal text-primary transition duration-150 ease-in-out hover:border-primary-accent-300 hover:bg-primary-50/50 hover:text-primary-accent-300 focus:border-primary-600 focus:bg-primary-50/50 focus:text-primary-600 focus:outline-none focus:ring-0 active:border-primary-700 active:text-primary-700 motion-reduce:transition-none dark:text-primary-500 dark:hover:bg-blue-950 dark:focus:bg-blue-950 text-white">Preview</button>
                           <button (click)="navigateEdit(item.ncr_init_id)" class="inline-block bg-[#016299] rounded border-2 border-primary px-4 pb-[6px] pt-2 text-xs font-medium uppercase leading-normal text-primary transition duration-150 ease-in-out hover:border-primary-accent-300 hover:bg-primary-50/50 hover:text-primary-accent-300 focus:border-primary-600 focus:bg-primary-50/50 focus:text-primary-600 focus:outline-none focus:ring-0 active:border-primary-700 active:text-primary-700 motion-reduce:transition-none dark:text-primary-500 dark:hover:bg-blue-950 dark:focus:bg-blue-950 text-white">
                             <i class="fas fa-edit" style="font-size: 12px;"></i> Edit
                           </button>

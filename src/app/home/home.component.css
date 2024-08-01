@@ -39,6 +39,7 @@
     width: 560px; /* Match the width of other items */
     height: 315px; /* Match the height of other items */
   }
+  
   .carousel-item {
     opacity: 0;
     transition: opacity 1s ease-in-out;
@@ -47,3 +48,40 @@
   .carousel-item.active {
     opacity: 1;
   }
+  
+  .carousel-caption {
+    position: absolute;
+    bottom: 0;
+    left: 0; /* Adjust as needed */
+    padding: 1.5rem; /* Adjust as needed */
+    background-color: rgba(53, 53, 53, 0.5); /* Adjust as needed */
+    color: white;
+    margin-top: 20px; /* Add margin-top here */
+  }
+  
+  .carousel-image {
+    margin-top: -20px; /* Adjust as needed */
+  }
+  
+  /* Replace Tailwind's @apply with standard CSS */
+  .static-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+  }
+  
+  .content-center {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
+    justify-content: center;
+  }
+  
+  .item {
+    flex-shrink: 0;
+  }
+ 
+  

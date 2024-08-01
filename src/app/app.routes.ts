@@ -12,6 +12,7 @@ import { SearchIORComponent } from './reports/search-ior/search-ior.component';
 import { FollowonIORComponent } from './reports/followon-ior/followon-ior.component';
 import { UserGuideComponent } from './user-guide/user-guide.component';
 import { EditNCRComponent } from './reports/edit-ncr/edit-ncr.component';
+import { EditIORComponent } from './reports/edit-ior/edit-ior.component';
 
 export const routes: Routes = [
     // Essential routes
@@ -28,6 +29,7 @@ export const routes: Routes = [
     { path: 'formIOR', component: FormIORComponent },
     { path: 'searchIOR', component: SearchIORComponent },
     { path: 'followIOR', component: FollowonIORComponent },
+    { path: 'editIOR', component: EditIORComponent },
     // Redirects
     { path: '', redirectTo: '/login', pathMatch: 'full' },
     { path: '**', redirectTo: '/login', pathMatch: 'full' },
