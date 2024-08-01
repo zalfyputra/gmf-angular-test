@@ -26,7 +26,7 @@ export class SearchNCRComponent implements OnInit {
 
   async fetchDataFromServer() {
     try {
-      const response = await axios.get('http://localhost:3000/showNCRInit');
+      const response = await axios.get('https://gmf-doa-2qimicuoja-et.a.run.app/showNCRInit');
       if (response.data.status === 200) {
         this.items = response.data.showProduct;
       } else {
@@ -39,7 +39,7 @@ export class SearchNCRComponent implements OnInit {
 
   async fetchDataBySearchTerm() {
     try {
-      const response = await axios.post('http://localhost:3000/searchNCR', {
+      const response = await axios.post('https://gmf-doa-2qimicuoja-et.a.run.app/searchNCR', {
         ...this.searchData,
         filterBy: this.filterBy // Include filter criteria in the request
       });
@@ -72,7 +72,7 @@ export class SearchNCRComponent implements OnInit {
     try {
       sessionStorage.setItem('document_id', documentId);
       console.log(documentId);
-      const response = await axios.post('http://localhost:3000/getPDFDrive', { documentId });
+      const response = await axios.post('https://gmf-doa-2qimicuoja-et.a.run.app/getPDFDrive', { documentId });
       console.log(response.data.message);
       if (response.data.status === 200) {
         window.location.href = response.data.message;

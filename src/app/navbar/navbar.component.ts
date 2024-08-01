@@ -25,7 +25,7 @@ export class NavbarComponent implements OnInit {
   }
 
   logout() {
-    axios.post(`http://localhost:3000/logout`)
+    axios.post(`https://gmf-doa-2qimicuoja-et.a.run.app/logout`)
       .then(response => {
         sessionStorage.removeItem('accountid');
         this.router.navigate(['/login']);
