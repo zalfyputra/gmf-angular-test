@@ -19,19 +19,11 @@ export class FollowonNCRComponent implements OnInit {
   followncr_data = {
     accountid: '',
     ncr_init_id: '',
-    close_corrective: '',
-    proposed_close_audit: '',
-    proposed_close_date: '',
-    is_close: '',
-    effective: '',
-    refer_verif: '',
-    sheet_no: '',
-    new_ncr_issue_no: '',
-    close_approvedby: '',
-    close_approveddate: '',
-    verif_chied: '',
-    verif_date: '',
-    temporarylink: ''
+    root_cause: '',
+    identified_date: '',
+    identified_by: '',
+    accepted_by: '',
+    accepted_date: '',
   };
 
   ngOnInit() {
@@ -64,7 +56,7 @@ export class FollowonNCRComponent implements OnInit {
     this.followncr_data.accountid = this.currentAccountID;
     console.log("Sending data:", this.followncr_data);
     try {
-      const response = await axios.post('https://gmf-doa-2qimicuoja-et.a.run.app/addNCRFollowResult', this.followncr_data);
+      const response = await axios.post('https://gmf-doa-2qimicuoja-et.a.run.app/addNCRReply', this.followncr_data);
 
       if (response.data.status === 200) {
         this.toastService.successToast('Follow on NCR added successfully');

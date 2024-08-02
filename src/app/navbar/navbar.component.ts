@@ -9,7 +9,7 @@ import { ToastService } from '../toast.service';
   standalone: true,
   imports: [CommonModule],
   templateUrl: './navbar.component.html',
-  styleUrls: ['./navbar.component.css']
+  styleUrl: './navbar.component.css'
 })
 export class NavbarComponent implements OnInit {
   constructor(private router: Router, private toastService: ToastService) { }

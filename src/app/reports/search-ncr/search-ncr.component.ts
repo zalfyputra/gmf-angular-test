@@ -3,8 +3,12 @@ import { CommonModule } from '@angular/common';
 import { NavbarComponent } from "../../navbar/navbar.component";
 import { FooterComponent } from "../../footer/footer.component";
 import axios from 'axios';
+import _ from 'lodash';
 import * as XLSX from 'xlsx';
 import { FormsModule } from '@angular/forms'; // Ensure FormsModule is imported
+import { response } from 'express';
+import { ToastService } from '../../toast.service';
+
 
 @Component({
   selector: 'app-search-ncr',
@@ -14,12 +18,10 @@ import { FormsModule } from '@angular/forms'; // Ensure FormsModule is imported
   styleUrls: ['./search-ncr.component.css']
 })
 export class SearchNCRComponent implements OnInit {
+  constructor(private toastService: ToastService) { }
   items: any[] = [];
   searchData = { input: '' };
-  searchTerm: string = ''; // Define searchTerm here
-  filterBy: string = 'all'; // Default filter
-  showFilters: boolean = false; // Toggle for filter visibility
-  
+
   ngOnInit() {
     this.fetchDataFromServer();
   }
@@ -39,10 +41,7 @@ export class SearchNCRComponent implements OnInit {
 
   async fetchDataBySearchTerm() {
     try {
-      const response = await axios.post('https://gmf-doa-2qimicuoja-et.a.run.app/searchNCR', {
-        ...this.searchData,
-        filterBy: this.filterBy // Include filter criteria in the request
-      });
+      const response = await axios.post('https://gmf-doa-2qimicuoja-et.a.run.app/searchNCR', this.searchData);
       if (response.data.status === 200) {
         this.items = response.data.showProduct;
       } else {
@@ -72,7 +71,10 @@ export class SearchNCRComponent implements OnInit {
     try {
       sessionStorage.setItem('document_id', documentId);
       console.log(documentId);
-      const response = await axios.post('https://gmf-doa-2qimicuoja-et.a.run.app/getPDFDrive', { documentId });
+      // Show the generating toast
+      const generatingToastElement = this.toastService.generatingToast('Generating NCR Document');
+      const response = await axios.post('https://gmf-doa-2qimicuoja-et.a.run.app/getPDFDrive', {documentId});
+      document.body.removeChild(generatingToastElement);
       console.log(response.data.message);
       if (response.data.status === 200) {
         window.location.href = response.data.message;
@@ -84,22 +86,12 @@ export class SearchNCRComponent implements OnInit {
     }
   }
 
-  navigateEdit(ncr_init_id: string) {
-    sessionStorage.setItem('ncr_init_id', ncr_init_id);
-    window.location.href = '/editNCR';
+  navigateEdit(documentId: string) {
+    sessionStorage.setItem('document_id', documentId);
+    window.location.href = 'Edit_NCR_2.html';
   }
 
   search() {
     this.fetchDataBySearchTerm();
-  }
-
-  toggleFilter() {
-    this.showFilters = !this.showFilters;
-  }
-
-  // Add this method to handle view details functionality
-  viewDetails(documentId: string) {
-    sessionStorage.setItem('document_id', documentId);
-    window.location.href = 'details-NCR.html'; // Change this to the actual path where details are displayed
   }
 }
